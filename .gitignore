@@ -1,0 +1,6 @@
+db.cnf
+venv
+s_readme.txt
+/images
+__pycache__
+*.pyc
