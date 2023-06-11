@@ -14,10 +14,18 @@ class Section(models.Model):
         verbose_name='Название раздела',
     )
 
+    count=1
     class Meta:
         ordering = ['id']
         verbose_name = 'Раздел'
         verbose_name_plural = 'Разделы'
+
+
+    def get_count(self):
+        return self.count
+
+    def get_sum_price(self):
+        return self.count * self.price
 
     def get_absolut_url(self):
         return reverse('section', args=[self.id])
@@ -56,6 +64,7 @@ class Product(models.Model):
 
     def __str__(self):
         return '{0} ({1})'.format(self.title, self.section.title)
+
 
 
 class Discount(models.Model):

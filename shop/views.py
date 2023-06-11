@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
 
-from shop.forms import SearchForm
-from shop.models import Section, Product
+from .forms import SearchForm
+from .models import Section, Product
 
 
 def index(request):
@@ -20,6 +20,18 @@ def index(request):
         context=context
     )
 
+
+def prerender(request):
+    if request.GET.get('add_cart'):
+        product_id = request.GET.get('add_cart')
+        get_object_or_404(Product, pk=product_id)
+        cart_info = request.session.get('cart_info', {})
+        count = cart_info.get(product_id, 0)
+        count += 1
+        cart_info.update({product_id: count})
+        request.session['cart_info'] = cart_info
+        print(cart_info)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def get_order_by_products(request):
     order_by = ''
@@ -62,6 +74,7 @@ def section(request, id):
 
 class ProductDetailView(DetailView):
     model = Product
+
     def get(self, request, *args, **kwargs):
         result = prerender(request)
         if result:
@@ -102,14 +115,29 @@ def search(request):
 
 
 
-def prerender(request):
-    if request.GET.get('add_cart'):
-        product_id = request.GET.get('add_cart')
-        get_object_or_404(Product, pk=product_id)
-        cart_info = request.session.get('cart_info', {})
-        count = cart_info.get(product_id, 0)
-        count += 1
-        cart_info.update({product_id: count})
-        request.session['cart_info'] = cart_info
-        print(cart_info)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def cart(request):
+    update_cart_info(request)
+    cart_info = request.session.get('cart_info')
+    products = []
+    if cart_info:
+        for product_id in cart_info:
+            product = get_object_or_404(Product, pk=product_id)
+            product.count = cart_info[product_id]
+            products.append(product)
+    context = {
+        'products': products,
+        'discount': request.session.get('discount', '')
+    }
+    return render(
+        request,
+        'cart.html',
+        context=context
+    )
+
+def update_cart_info(request):
+    if request.POST:
+        cart_info = {}
+        for param in request.POST:
+            value = request.POST.get(param)
+            print(param, value)
