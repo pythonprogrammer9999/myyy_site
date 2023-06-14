@@ -3,13 +3,57 @@
 {% block description %}<meta name="description" content="Наши контакты"/> {% endblock %}
 {% block keywords %}<meta name="keywords" content="Контакты магазина"/>{% endblock %}
 {% block content %}
-<div id="article">
-	<h2>Контакты</h2>
-	<p>Мы находимся по адресу г. Москва, ул. такая-то, д. такой-то.</p>
-	<p>Мы работаем с 09:00 до 21:00 без перерыва и выходных.</p>
-	<p>А вообще это тестовый сайт, который был создан в обучащем курсе Михаила Русакова<br /><a href="https://srs.myrusakov.ru/im">Создание Интернет-магазина на PHP и MySQL</a></p>
-	<p>В связи с этим, данный сайт ничего в реальности не продаёт. Поэтому, заказав какой-нибудь фильм, не стоит ждать, что он к Вам придёт.</p>
-</div>
+<h1>Оставьте ваш вопрос, мы вам ответим!</h1>
+		<!-- Контейнер выравнивает по ширине и по центру -->
+
+
+			{{ form.first_name }}
+			{{ form.second_name }}
+			{{ form.email }}
+			<h1></h1>
+			{{ form.message }}
+
+
+
+
+			<!-- Левая колонка: адрес, телефоны, email. Можете добавить свое -->
+			<div class="left-side">
+			  <div class="address details">
+
+				<!-- Вместо классов: название шрифтовых иконок (fontawesome.com) -->
+				<i class="fas fa-map-marker-alt"></i>
+
+				<!-- topic - заголовок, text-one, text-two - текст -->
+				<div class="topic">Адрес</div>
+				<div class="text-one">г. Москва</div>
+				<div class="text-two">Пресненская наб., 8 стр. 1</div>
+			  </div>
+			  <div class="phone details">
+				<i class="fas fa-phone-alt"></i>
+				<div class="topic">Телефон</div>
+				<div class="text-one">8-800-000-00-00</div>
+				<div class="text-two">8-900-000-00-00</div>
+			  </div>
+			  <div class="email details">
+				<i class="fas fa-envelope"></i>
+				<div class="topic">Email</div>
+				<div class="text-one">support@site.com</div>
+				<div class="text-two">admin@site.com</div>
+			  </div>
+			</div>
+
+			<!-- Правая колонка: сама форма -->
+			<div class="right-side">
+
+			  <!-- Заголовок для формы -->
+			  <div class="topic-text">Отправьте нам сообщение</div>
+
+			  <!-- Какой-то дополнительный текст -->
+
+
+
+
+
 <div id="map" style="width:400px; height:300px"></div>
 <script src="//api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
     <script src="https://yandex.st/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
@@ -48,6 +92,12 @@ function init () {
     });
 }
 </script>
+
+
+<p>
+Если у вас есть какие-то вопросы или предложения по сотрудничеству -
+заполните форму ниже
+</p>
 {% endblock %}
 
 

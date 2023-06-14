@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
 
-from .forms import SearchForm
+from .forms import SearchForm, ContactForm
 from .models import Section, Product
 
 
@@ -55,7 +55,16 @@ def delivery(request):
 
 
 def contacts(request):
-    return render(request, 'contacts.html')
+    context ={}
+    if request.method == 'POST':
+        pass
+    else:
+        form=ContactForm()
+        context['form'] = form
+        return render(
+            request,
+            'contacts.html',
+            context=context)
 
 
 def section(request, id):
